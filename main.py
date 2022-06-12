@@ -21,8 +21,8 @@ batch_size =50
 
 
 
-test_dataset =dataset.csHeadBody(csv_file="images\\test_labels.csv",root_dir="images\\test")
-train_dataset =dataset.csHeadBody(csv_file="images\\train_labels.csv",root_dir="images\\train")
+test_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\test_labels.csv",root_dir="cs_agent\\images\\test")
+train_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\train_labels.csv",root_dir="cs_agent\\images\\train")
 train_loader =DataLoader(dataset =train_dataset,batch_size=batch_size,shuffle=True)
 test_loader =DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=True)
 
