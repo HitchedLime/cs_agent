@@ -18,11 +18,19 @@ LR=0.5
 WEIGHT_DECAY=0.5
 batch_size =50
 #DATA LOADING ###################################################################################################################
+#transforms= 
+    #torchvision.transforms.ToTensor(),ms.Comp
+#    
+ #   torchvision.transforms.Resize((535, 535))],
+#)
 
+transforms = torch.nn.Sequential(
+    torchvision.transforms.CenterCrop(10),
+    torchvision.transforms.Resize((300, 535)),
+)
 
-
-test_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\test_labels.csv",root_dir="cs_agent\\images\\test")
-train_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\train_labels.csv",root_dir="cs_agent\\images\\train")
+test_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\test_labels.csv",root_dir="cs_agent\\images\\test",transform=torchvision.transforms.Compose([transforms,torchvision.transforms.ToTensor()]))
+train_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\train_labels.csv",root_dir="cs_agent\\images\\train",transform=transforms)
 train_loader =DataLoader(dataset =train_dataset,batch_size=batch_size,shuffle=True)
 test_loader =DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=True)
 
@@ -48,14 +56,14 @@ for epoch in range(2):  # loop over the dataset multiple times
     running_loss = 0.0
     for i, data in enumerate(train_loader, 0):
         # get the inputs; data is a list of [inputs, labels]
-        print(data)
+        
         inputs, labels = data
-
+        
         # zero the parameter gradients
         optimizer.zero_grad()
 
         # forward + backward + optimize
-        outputs = net(inputs)
+        outputs = net(inputs.float())
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
