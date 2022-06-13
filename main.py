@@ -6,7 +6,7 @@ import dataset
 import os 
 from torch.utils.data import  DataLoader
 import torch.nn as nn
-
+import pandas as pd 
 import torchvision
 import check_device
 
@@ -16,7 +16,7 @@ import torch.optim as optim
 EPS = 1.e-7
 LR=0.5
 WEIGHT_DECAY=0.5
-batch_size =50
+batch_size =1
 #DATA LOADING ###################################################################################################################
 #transforms= 
     #torchvision.transforms.ToTensor(),ms.Comp
@@ -36,7 +36,6 @@ test_loader =DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=True)
 
 
 
-
 #DATA LOADING ###################################################################################################################END
 
 
@@ -52,7 +51,7 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
 
 for epoch in range(2):  # loop over the dataset multiple times
-
+    
     running_loss = 0.0
     for i, data in enumerate(train_loader, 0):
         # get the inputs; data is a list of [inputs, labels]
@@ -64,6 +63,8 @@ for epoch in range(2):  # loop over the dataset multiple times
 
         # forward + backward + optimize
         outputs = net(inputs.float())
+        print(labels)
+        print("theese are ouptus ",outputs)
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()

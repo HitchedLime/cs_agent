@@ -23,11 +23,13 @@ class csHeadBody(Dataset):
         
         image = read_image(img_path)
         label = self.img_labels.iloc[idx, 1]
+        print("thos os label",label)
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
             label = self.target_transform(label)
-        return image, label 
+     #head is one body is 2
+        
 
         """ class csHeadBody ( Dataset ) :
         def __init__( self , csv_file , root_dir , transform = None ) :
