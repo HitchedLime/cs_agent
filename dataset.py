@@ -7,6 +7,9 @@ from torch.utils.data import Dataset
 from PIL import Image
 from skimage import io
 import torch
+import torchvision
+
+
 
 class csHeadBody(Dataset):
     def __init__(self, csv_file, root_dir, transform=None, target_transform=None):
@@ -21,17 +24,21 @@ class csHeadBody(Dataset):
     def __getitem__(self, idx):
         img_path = os.path.join(self.root_dir, self.img_labels.iloc[idx, 0])
         
-        image = read_image(img_path)
-        label = self.img_labels.iloc[idx, 1]
-        print("thos os label",label)
+        image = read_image(img_path, mode=torchvision.io.image.ImageReadMode.RGB)
+        label = self.img_labels.iloc[idx, 3]
+      
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
             label = self.target_transform(label)
      #head is one body is 2
+
+
         
 
-        """ class csHeadBody ( Dataset ) :
+
+"""
+class csHeadBody ( Dataset ) :
         def __init__( self , csv_file , root_dir , transform = None ) :
             self . annotations = pd . read_csv ( csv_file )
             self.root_dir = root_dir
@@ -44,4 +51,5 @@ class csHeadBody(Dataset):
             y_label = torch . tensor ( int ( self . annotations.iloc [ index , 1 ] ) )
             if self.transform :
                 image = self.transform ( image )
-            return ( image , y_label ) """
+            return ( image , y_label ) 
+"""

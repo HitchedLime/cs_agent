@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>image-23.jpg</filename>
+	<path>D:\Document\CSGOmodel\Tensorflow\workspace\images\train\image-23\.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>535</width>
+		<height>300</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>body</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>263</xmin>
+			<ymin>136</ymin>
+			<xmax>278</xmax>
+			<ymax>154</ymax>
+		</bndbox>
+	</object>
+</annotation>
