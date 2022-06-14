@@ -101,7 +101,7 @@ classes= (1,2)
 net = neural_network.Net()
 net.load_state_dict(torch.load(PATH))
 outputs = net(images)
-
+print('xd')
 
 correct = 0
 total = 0
