@@ -31,6 +31,8 @@ class csHeadBody(Dataset):
             image = self.transform(image)
         if self.target_transform:
             label = self.target_transform(label)
+
+        return image,label
      #head is one body is 2
 
 

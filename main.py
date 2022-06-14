@@ -9,7 +9,7 @@ import torch.nn as nn
 import pandas as pd 
 import torchvision
 import check_device
-
+from sklearn import preprocessing
 import neural_network
 import torch.optim as optim
 
@@ -47,18 +47,18 @@ test_loader =DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=True)
 net=neural_network.Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
-
+le = preprocessing.LabelEncoder()
 
 #NEURAL NET END ######################################################################################
 
 
 
 for epoch in range(2):  # loop over the dataset multiple times
-    print("train_loader",train_loader.__len__())
+   # print("train_loader",train_loader.__len__())
     running_loss = 0.0
     for i, data in enumerate(train_loader, 0):
         # get the inputs; data is a list of [inputs, labels]
-        print(data)
+        #print(data)
         inputs, labels = data
         
         # zero the parameter gradients
@@ -66,16 +66,16 @@ for epoch in range(2):  # loop over the dataset multiple times
 
         # forward + backward + optimize
         outputs = net(inputs.float())
-        print(labels)
-        print("theese are ouptus ",outputs)
-        loss = criterion(outputs, labels)
+        
+       # print("theese are ouptus ",outputs)
+        loss = criterion(outputs,torch.as_tensor(le.fit_transform(labels)))
         loss.backward()
         optimizer.step()
 
         # print statistics
         running_loss += loss.item()
-        if i % 2000 == 1999:    # print every 2000 mini-batches
-            print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
-            running_loss = 0.0
+          # print every 2000 mini-batches
+        print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
+        running_loss = 0.0
 
 print('Finished Training')
