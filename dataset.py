@@ -1,14 +1,9 @@
 import os
-import pandas as pd
-from torchvision.io import read_image
-import re
-import numpy as np
-from torch.utils.data import Dataset
-from PIL import Image
-from skimage import io
-import torch
-import torchvision
 
+import pandas as pd
+import torchvision
+from torch.utils.data import Dataset
+from torchvision.io import read_image
 
 
 class csHeadBody(Dataset):

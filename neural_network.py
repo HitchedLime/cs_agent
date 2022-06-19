@@ -42,10 +42,10 @@ class Net(nn.Module):
         self.pool = nn.MaxPool2d(kernel_size=(2, 2))
         self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3)
         if use_global_average_pooling:
-            self.fc_gap = nn.Linear(64, 10)
+            self.fc_gap = nn.Linear(64, 2)
         else:
             self.fc_1 = nn.Linear(54 * 54 * 64, 84)  # 54 img side times 64 out channels from conv2
-            self.fc_2 = nn.Linear(84, 10)
+            self.fc_2 = nn.Linear(84, 2)
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))  # img side: (224 - 2) // 2 = 111

@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 import dataset 
 from torch.utils.data import  DataLoader
@@ -6,14 +7,23 @@ import torchvision
 from sklearn import preprocessing
 import neural_network
 import torch.optim as optim
-PATH = './test_net.pth'
+import os
+
 EPS = 1.e-7
 LR=0.5
 WEIGHT_DECAY=0.5
+PATH = './test_net.pth'
+ROOT_DIR = 'images\\'
+
+
+train_path = 'images\\test_labels.csv'
+test_path ='images/test_labels.csv'
+
 
 
 #DATA LOADING ###################################################################################################################
 batch_size =5
+number_of_epochs=50
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 transforms = torchvision.transforms.Compose([
@@ -22,11 +32,10 @@ transforms = torchvision.transforms.Compose([
     torchvision.transforms.Resize((224, 224)),
 ])
 
-test_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\test_labels.csv",root_dir="cs_agent\\images\\test",transform=transforms)
-train_dataset =dataset.csHeadBody(csv_file="cs_agent\\images\\train_labels.csv",root_dir="cs_agent\\images\\train",transform=transforms)
-train_loader =DataLoader(dataset =train_dataset,batch_size=batch_size,shuffle=True)
-test_loader =DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=True)
-
+test_dataset =dataset.csHeadBody(csv_file=test_path,root_dir=ROOT_DIR+'test',transform=transforms)
+train_dataset =dataset.csHeadBody(csv_file=train_path,root_dir=ROOT_DIR+'train',transform=transforms)
+train_loader =DataLoader(dataset =train_dataset,batch_size=batch_size,shuffle=False)
+test_loader =DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=False)
 
 
 #DATA LOADING ###################################################################################################################END
@@ -43,7 +52,7 @@ le = preprocessing.LabelEncoder()
 
 
 
-for epoch in range(2):  # loop over the dataset multiple times
+for epoch in range(number_of_epochs):  # loop over the dataset multiple times
    
     running_loss = 0.0
     for i, data in enumerate(train_loader, 0):
@@ -77,6 +86,7 @@ print("Model saved !")
 
 
 dataiter = iter(test_loader)
+
 images, labels = dataiter.next()
 classes= (1,2)
 
@@ -85,7 +95,7 @@ classes= (1,2)
 net = neural_network.Net()
 net.load_state_dict(torch.load(PATH))
 outputs = net(images)
-print('xd')
+
 
 correct = 0
 total = 0
@@ -98,6 +108,12 @@ with torch.no_grad():
         # the class with the highest energy is what we choose as prediction
         _, predicted = torch.max(outputs.data, 1)
         total += len(labels)
+
         correct += (predicted == labels).sum().item()
+
+
+
+
+print(f'Accuracy of the network on the 10000 test images: {100 * correct // total} %')
 
 print(f'Accuracy of the network on the 10000 test images: {100 * correct // total} %')
