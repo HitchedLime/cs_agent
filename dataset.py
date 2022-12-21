@@ -19,11 +19,9 @@ class CsPlayer(VisionDataset):
             split: str,
 
             transform: Optional[Callable] = None,
-            target_transform: Optional[Callable] = None,
 
     ) -> None:
-        super().__init__(root=os.path.join(root, self.BASE_FOLDER), transform=transform,
-                         target_transform=target_transform)
+        super().__init__(root=os.path.join(root, self.BASE_FOLDER), transform=transform)
         self.split = verify_str_arg(split, "split", ("train", "val", "test"))
         self.img_info: List[Dict[str, Union[str, Dict[str, torch.Tensor]]]] = []
         if self.split in ("train", "test", "val"):
@@ -34,10 +32,9 @@ class CsPlayer(VisionDataset):
 
         target = self.img_info[index]["annotations"]
 
-        if self.target_transform is not None:
-            target = self.target_transform(target)
+
         if self.transform is not None:
-            img = self.transform(img)
+            img, target = self.transform(img, target)
 
         return img, target
 
@@ -61,20 +58,20 @@ class CsPlayer(VisionDataset):
             img_path = os.path.join(images_path, files_images[i])
             annotation_file = open(os.path.join(labels_path, files_labels[i]), 'r')
             labels = []
-            number_boxes =0
+            number_boxes = 0
             for line in annotation_file:
-                number_boxes+=1
+                number_boxes += 1
                 labels.append(list(map(float, line.split())))
                 labels_tensor = []
                 for label in labels:
                     labels_tensor.append(torch.tensor(label))
 
                 self.img_info.append(
-                {
-                    "img_path": img_path,
-                    "annotations": {
-                        "bbox": labels_tensor,  # x, y, width, height#
+                    {
+                        "img_path": img_path,
+                        "annotations": {
+                            "bbox": labels_tensor,  # x, y, width, height#
 
-                    },
-                }
-            )
+                        },
+                    }
+                )
