@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3679f34-9815-40a8-83d5-daa2b27ba465" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/script/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/script/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -159,7 +157,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/script/train.py</url>
-          <line>49</line>
+          <line>58</line>
           <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -186,11 +184,6 @@
           <url>file://$PROJECT_DIR$/venv/Lib/site-packages/torchvision/models/detection/transform.py</url>
           <line>147</line>
           <option name="timeStamp" value="153" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/script/train.py</url>
-          <line>74</line>
-          <option name="timeStamp" value="154" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
